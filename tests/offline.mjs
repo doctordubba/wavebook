@@ -12,9 +12,9 @@ stores.set('unrelated-cache',new Map());stores.set('wavebook-shell:'+scope+':old
 async function runEvent(type,event={}){let work;listeners[type]({...event,waitUntil:p=>work=p});await work;}
 await runEvent('install');assert.equal(skipped,1);await runEvent('activate');assert.equal(claimed,1);assert.ok(stores.has('unrelated-cache'));assert.ok(!stores.has('wavebook-shell:'+scope+':old'));
 async function request(url,mode='cors'){let response;listeners.fetch({request:{url,method:'GET',mode},respondWith:p=>response=p});return response?await response:undefined;}
-let response=await request(scope,'navigate');assert.ok((await response.text()).includes('assets/app-v3.js'));
-response=await request(scope+'assets/app-v3.js');assert.ok((await response.text()).includes('class Workspace'));const fetches=calls.length;
-network=true;response=await request(scope+'assets/app-v3.js');assert.ok((await response.text()).includes('class Workspace'));assert.equal(calls.length,fetches,'Versioned asset uses cached bundle');
+let response=await request(scope,'navigate');assert.ok((await response.text()).includes('assets/app-v3.1.js'));
+response=await request(scope+'assets/app-v3.1.js');assert.ok((await response.text()).includes('class Workspace'));const fetches=calls.length;
+network=true;response=await request(scope+'assets/app-v3.1.js');assert.ok((await response.text()).includes('class Workspace'));assert.equal(calls.length,fetches,'Versioned asset uses cached bundle');
 response=await request(scope,'navigate');assert.equal(await response.text(),'updated online app');network=false;response=await request(scope,'navigate');assert.equal(await response.text(),'updated online app');
 assert.equal(await request('https://source.example/guide'),undefined);assert.equal(await request(scope+'tests/responsive.html','navigate'),undefined);
 console.log('PASS offline bundle, scoped cleanup, navigation updates, cache fallback and unrelated requests');

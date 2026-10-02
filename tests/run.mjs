@@ -12,7 +12,7 @@ const saved=new Map(),events=new Map();
 const context=vm.createContext({window,document,module:{exports:{}},localStorage:{getItem:k=>saved.get(k)||null,setItem:(k,v)=>saved.set(k,v)},location:{hash:'#overview',search:'',protocol:'https:'},navigator:{},URL,URLSearchParams,Blob,console,setTimeout:(fn,t)=>{const x=setTimeout(fn,Math.min(t,5));x.unref();return x;},clearTimeout});
 window.scrollTo=()=>{};window.confirm=()=>true;
 
-for(const f of ['preact-v1.js','data-v3.js','app-v3.js'])vm.runInContext(fs.readFileSync(path.join(root,'assets',f),'utf8'),context,{filename:f});
+for(const f of ['preact-v1.js','data-v3.js','app-v3.1.js'])vm.runInContext(fs.readFileSync(path.join(root,'assets',f),'utf8'),context,{filename:f});
 const api=context.module.exports;
 const plain=x=>JSON.parse(JSON.stringify(x));
 let checks=0;
@@ -47,10 +47,10 @@ const app=new api.Workspace({});
 app.setState=(patch,cb)=>{app.state={...app.state,...(typeof patch==='function'?patch(app.state):patch)};cb?.();};
 check('changing presets preserves separate recorded loadouts',()=>{
  app.setStat('iuno','er','128');app.setPreset('iuno','carry');assert.equal(app.state.store.profiles.iuno.stats.er,'');app.setStat('iuno','er','110');app.setPreset('iuno','hybrid');assert.equal(app.state.store.profiles.iuno.stats.er,'128');app.setPreset('iuno','carry');assert.equal(app.state.store.profiles.iuno.stats.er,'110');
- const roundtrip=api.cleanImport(plain(app.state.store));assert.equal(roundtrip.profiles.iuno.statsByPreset.hybrid.er,'128');assert.equal(roundtrip.profiles.iuno.statsByPreset.carry.er,'110');
+ const roundtrip=api.cleanImport(plain(app.state.store));assert.equal(roundtrip.profiles.iuno.statsByPreset.hybrid.er,'128');assert.equal(roundtrip.profiles.iuno.statsByPreset.carry.er,'110');app.setPreset('iuno','hybrid');app.setStat('iuno','er','129');app.undoLast();assert.equal(app.state.store.profiles.iuno.preset,'carry');assert.equal(app.state.store.profiles.iuno.statsByPreset.hybrid.er,'129');
 });
 check('editing, clearing, template replacement and undo preserve custom teams',()=>{
- app.editMember(0,1,'lynae');assert.equal(api.squadAt(app.state.store,0).members[1],'lynae');app.undoLast();assert.equal(api.squadAt(app.state.store,0).members[1],'iuno');app.editMember(0,1,'rebecca');const clean=api.cleanImport(plain(app.state.store));assert.equal(api.squadAt(clean,0).members[1],'rebecca');app.assignTeam(0,'jingran-core');assert.equal(app.state.store.customSquads[0],null);app.assignTeam(0,'');assert.equal(api.squadAt(app.state.store,0),null);
+ app.editMember(0,1,'lynae');app.updateProfile('jingran',{notes:'Keep this note after Undo'});assert.equal(api.squadAt(app.state.store,0).members[1],'lynae');app.undoLast();assert.equal(api.squadAt(app.state.store,0).members[1],'iuno');assert.equal(app.state.store.profiles.jingran.notes,'Keep this note after Undo');app.editMember(0,1,'rebecca');const clean=api.cleanImport(plain(app.state.store));assert.equal(api.squadAt(clean,0).members[1],'rebecca');app.assignTeam(0,'jingran-core');assert.equal(app.state.store.customSquads[0],null);app.assignTeam(0,'');assert.equal(api.squadAt(app.state.store,0),null);
 });
 const render=vm.runInContext('Preact.render',context),fixture=document.getElementById('fixture');
 check('all pages and all character sections render usable content',()=>{
@@ -68,7 +68,7 @@ check('search, ownership, role filters and sorting remain combinable',()=>{
 });
 check('all linked app assets and offline pre-cache entries exist',()=>{
  const html=fs.readFileSync(path.join(root,'index.html'),'utf8');for(const match of html.matchAll(/(?:src|href)="\.\/([^"#]+)"/g))assert.ok(fs.existsSync(path.join(root,match[1])),match[1]);
- const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');for(const f of ['assets/preact-v1.js','assets/data-v3.js','assets/app-v3.js','assets/styles-v3.css','assets/workspace-v3.css','assets/original-report.pdf'])assert.ok(sw.includes(f),f);
+ const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');for(const f of ['assets/preact-v1.js','assets/data-v3.js','assets/app-v3.1.js','assets/styles-v3.css','assets/workspace-v3.1.css','assets/original-report.pdf'])assert.ok(sw.includes(f),f);
  assert.ok(fs.readFileSync(path.join(root,'assets/original-report.pdf')).subarray(0,4).toString()==='%PDF');
 });
 console.log(`\n${checks} checks passed.`);

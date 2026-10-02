@@ -2,11 +2,11 @@
    Only this app's own cache is managed. Personal progress is in localStorage,
    not this cache. Source sites and private backups are never cached here. */
 'use strict';
-const VERSION = 'v3-20261002';
+const VERSION = 'v3.1-20261002';
 const SCOPE = self.registration.scope;
 const PREFIX = 'wavebook-shell:' + SCOPE + ':';
 const CACHE = PREFIX + VERSION;
-const URLS = ['index.html','pwa.js','manifest.webmanifest','apple-touch-icon.png','icon-192.png','icon-512.png','assets/preact-v1.js','assets/data-v3.js','assets/app-v3.js','assets/styles-v3.css','assets/workspace-v3.css','assets/original-report.pdf']
+const URLS = ['index.html','pwa.js','manifest.webmanifest','apple-touch-icon.png','icon-192.png','icon-512.png','assets/preact-v1.js','assets/data-v3.js','assets/app-v3.1.js','assets/styles-v3.css','assets/workspace-v3.1.css','assets/original-report.pdf']
   .map(name => new URL(name, SCOPE).href);
 const INDEX = URLS[0];
 self.addEventListener('install', event => {
