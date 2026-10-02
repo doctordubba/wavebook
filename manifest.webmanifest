@@ -1,0 +1,40 @@
+{
+  "id": "./",
+  "name": "Wavebook — Wuthering Waves Roster",
+  "short_name": "Wavebook",
+  "description": "Builds, Echo presets, teams, talent priorities and rotation practice. Local progress with manual backups.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1018",
+  "theme_color": "#0b1018",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Roster",
+      "url": "./#roster"
+    },
+    {
+      "name": "Team planner",
+      "url": "./#teams"
+    },
+    {
+      "name": "Rotation lab",
+      "url": "./#rotation"
+    }
+  ]
+}
