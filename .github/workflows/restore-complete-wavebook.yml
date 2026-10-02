@@ -1,0 +1,79 @@
+name: Restore complete Wavebook website
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/restore-complete-wavebook.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prepare-wavebook
+  cancel-in-progress: false
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Validate every transfer segment and original website file
+        shell: python
+        run: |
+          from pathlib import Path
+          import base64, hashlib, io, json, tarfile
+          root = Path('.')
+          expected = {'.nojekyll','DEPLOYMENT.md','TESTING.md','THIRD_PARTY_NOTICES.txt','apple-touch-icon.png','icon-192.png','icon-512.png','index.html','manifest.webmanifest','pwa.js','sw.js'}
+          manifest = json.loads(Path('.github/recovery/manifest.json').read_text())
+          assert manifest['format'] == 'tar.xz'
+          assert set(manifest['files']) == expected
+          assert len(manifest['parts']) == 16
+          sha = lambda b: hashlib.sha256(b).hexdigest()
+          chunks = []
+          for i, part in enumerate(manifest['parts'], 1):
+              name = f'part-{i:02d}.b64'
+              assert part['file'] == name
+              folder = '.github/wavebook-package' if i <= 11 else '.github/recovery'
+              raw = (Path(folder) / name).read_bytes()
+              assert sha(raw) == part['sha256'], f'Corrupt transfer: {name}'
+              chunks.append(raw.strip())
+              print('Verified segment', i)
+          payload = base64.b64decode(b''.join(chunks), validate=True)
+          assert len(payload) == manifest['size']
+          assert sha(payload) == manifest['sha256']
+          restored = {}
+          with tarfile.open(fileobj=io.BytesIO(payload), mode='r:xz') as archive:
+              for member in archive:
+                  assert member.isfile() and member.name in expected and member.name not in restored
+                  assert member.size < 2_000_000
+                  data = archive.extractfile(member).read()
+                  assert sha(data) == manifest['files'][member.name], f'Corrupt file: {member.name}'
+                  restored[member.name] = data
+          assert set(restored) == expected
+          for name, data in restored.items():
+              (root / name).write_bytes(data)
+              print('Restored', name, len(data), sha(data))
+          page = restored['index.html'].decode('utf-8')
+          assert 'wavebook-progress-v2' in page
+          assert 'data:application/pdf;base64,' in page
+          assert 'serviceWorker' in restored['pwa.js'].decode()
+          (root / 'RESTORATION.md').write_text('# Verified Wavebook restoration\n\nAll 16 transfer segments, the complete archive, and all 11 website files passed SHA-256 checks against the original package. The app and embedded report were restored unchanged. The existing README was preserved.\n\nOriginal index.html SHA-256: `' + manifest['files']['index.html'] + '`\n\nRuntime and device testing are separate from transfer integrity.\n')
+      - name: Check supporting JavaScript syntax
+        run: |
+          node --check pwa.js
+          node --check sw.js
+      - name: Commit complete website without altering existing README
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- index.html .nojekyll manifest.webmanifest pwa.js sw.js apple-touch-icon.png icon-192.png icon-512.png THIRD_PARTY_NOTICES.txt TESTING.md DEPLOYMENT.md RESTORATION.md
+          if git diff --cached --quiet; then
+            echo 'The repository already contains the verified website.'
+          else
+            git commit -m 'Restore complete original Wavebook app and iPhone web-app assets'
+            git push origin HEAD:main
+          fi
