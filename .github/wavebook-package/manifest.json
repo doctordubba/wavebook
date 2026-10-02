@@ -1,0 +1,36 @@
+{
+  "format": "tar.xz.base64.parts",
+  "sha256": "b524ff1b9ad13dd438c6b850acdf7928bb95ee6e770124d0f211fc12738bb066",
+  "bytes": 205864,
+  "parts": [
+    {"name":"part-01.b64","sha256":"e74bfcc3d327b24a3d4608699866c38c324126b488367ae6a033c9b22bd1fdc3","bytes":13500},
+    {"name":"part-02.b64","sha256":"ae6b4aa00a897ae92be00d94a2b2534e23ba2402c68b95f4629ac5e63a684692","bytes":13500},
+    {"name":"part-03.b64","sha256":"9e8ca28a8a8f4b1e44eddbb74cdc08b5596d2ecf6ad37bf60e61f034a1e2a61e","bytes":13500},
+    {"name":"part-04.b64","sha256":"c1e9a7883b95c7807075374254918e535a5a1648b171dced87d6fc21c149a328","bytes":13500},
+    {"name":"part-05.b64","sha256":"86c31e0f3d9cd1b4489a6ffee0c8243b21fb4d487b8509541501b5e5fabc9059","bytes":13500},
+    {"name":"part-06.b64","sha256":"64ab1e7a3e1487b9b024f56ceffa110fd1209b4870327531b17f93eea7068e50","bytes":13500},
+    {"name":"part-07.b64","sha256":"5c1f380de490f1a75b27d496ad88b1ffbf7b0b7a22bb5d2e1ef9f28a3b27773f","bytes":13500},
+    {"name":"part-08.b64","sha256":"546d797788a7a1c5482d2a686a0a39fb0e6f4f2b95b54cf3b2308a0a0cfa46ea","bytes":13500},
+    {"name":"part-09.b64","sha256":"d4c100ff640b01949bd779b01e9136e7c653ed0db112fc0efc5f2760f500f689","bytes":13500},
+    {"name":"part-10.b64","sha256":"a349eca9e82dc5f91a8d3a24cbb4560a29d2d0f16f342d150d00283bb4e7d22c","bytes":13500},
+    {"name":"part-11.b64","sha256":"ef57b3fdfab9bf6ea35171e8c30eb1a3f245de5db8f3c97631e6ac9a5aa54504","bytes":13500},
+    {"name":"part-12.b64","sha256":"2ee1d48b6f146213dffe24c852f5f365c802afb6f13c50d0784e106f5f781d2a5","bytes":13500},
+    {"name":"part-13.b64","sha256":"91d148d77acb91ff52fde3b0b6baec8c10d1ca86e11f33c49e38f09c64052352","bytes":13500},
+    {"name":"part-14.b64","sha256":"94d8ca80f72fa909bf1bcc48c3a7c53c63ac3449e08411b6d93c7699982589a4a","bytes":13500},
+    {"name":"part-15.b64","sha256":"0ebe00cdbfce6c757cfabc772e8e695a6c955aa7a9e9fe053c03f3c00e0a5f364","bytes":13500},
+    {"name":"part-16.b64","sha256":"fe5478cfa7c4e4ed7334ce3c01f08d15f6d183f07a8a71bd3125463ca844e462","bytes":3364}
+  ],
+  "assets": {
+    ".nojekyll":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "DEPLOYMENT.md":"9d21debfb15ed876d8944284867d728a9573e1456db8744bfc51015dd5037333",
+    "TESTING.md":"4e37b6f4c7affc8634971973f892b71f9c3bea2b100a23e83b172de6528e937a",
+    "THIRD_PARTY_NOTICES.txt":"8b04ed2a5e50f482a1a63734cf5dc834b0eefd876b31a9b7c7eccf0acc8d5abd",
+    "apple-touch-icon.png":"141985cb3588ddcd00522938422792021c08b0d15d49489efa13f2eb44b55c58",
+    "icon-192.png":"0f59cf0276c34d066382b5a226d4b97739fbad7a25f7f482647a4e11bc6a7662",
+    "icon-512.png":"6f87fa773becec9d246c491de5eb845201ce6ec51e731f00702c08f6e59d8b13",
+    "index.html":"ffd81fc069cf0dc6e5a2709997279732f15742a429617b4bd36a788dad05365d",
+    "manifest.webmanifest":"e4f95c6ad8781c1986c7e7e6d484ab7c0b6bc5e65162a91d55df7a4aecb441ea",
+    "pwa.js":"eea36907cfc0927248769046b5feab277ac4d05c35b1c1dc694512e1440730b5",
+    "sw.js":"addb8bad18b65f6ee0669d98c34ebe76f630242d5f10d96174de5be3f7d71261"
+  }
+}
