@@ -1,0 +1,44 @@
+name: Recover Wavebook transfer
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/recover-wavebook.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect verified partial archive
+        shell: python
+        run: |
+          from pathlib import Path
+          import base64, hashlib, io, json, lzma, tarfile
+          p = Path('.github/wavebook-package')
+          data = b''.join((p / f'part-{i:02d}.b64').read_bytes().strip() for i in range(1, 12))
+          compressed = base64.b64decode(data, validate=True)
+          stream = lzma.LZMADecompressor()
+          partial = stream.decompress(compressed)
+          out = Path('recovery-artifacts')
+          out.mkdir()
+          (out / 'partial.tar').write_bytes(partial)
+          print('Compressed prefix:', len(compressed), 'decompressed:', len(partial), 'header:', compressed[:64].hex())
+          try:
+              with tarfile.open(fileobj=io.BytesIO(partial), mode='r:') as archive:
+                  for m in archive:
+                      print('MEMBER', json.dumps(dict(name=m.name,size=m.size,mtime=m.mtime,uid=m.uid,gid=m.gid,uname=m.uname,gname=m.gname,mode=m.mode,offset=m.offset,data_offset=m.offset_data,pax=m.pax_headers)))
+                      if m.offset_data + m.size <= len(partial):
+                          content = archive.extractfile(m).read()
+                          print('COMPLETE_SHA256', m.name, hashlib.sha256(content).hexdigest())
+          except tarfile.ReadError as exc:
+              print('Expected incomplete archive:', str(exc))
+          for f in sorted(p.glob('part-*.b64')):
+              (out / f.name).write_bytes(f.read_bytes())
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wavebook-recovery-bytes
+          path: recovery-artifacts/
+          retention-days: 1
