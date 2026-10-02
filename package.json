@@ -1,0 +1,8 @@
+{
+  "name": "wavebook",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"test": "node tests/run.mjs && node tests/offline.mjs"},
+  "devDependencies": {"linkedom": "0.18.13"}
+}

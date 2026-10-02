@@ -10,6 +10,7 @@
       window.dispatchEvent(new CustomEvent('wavebook-offline-ready'));
     } catch (error) {
       document.documentElement.dataset.wavebookOffline = 'unavailable';
+      window.dispatchEvent(new CustomEvent('wavebook-offline-ready'));
       console.warn('Wavebook remains available online; offline caching did not initialize.', error);
     }
   });

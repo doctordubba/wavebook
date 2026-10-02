@@ -1,6 +1,6 @@
 # Third-party notices
 
-The portable standalone build includes Preact, copyright (c) 2015-present Jason Miller, under the MIT license. Its complete license is in `vendor/LICENSE-PREACT.txt` and embedded in the built HTML.
+The static site includes Preact, copyright (c) 2015-present Jason Miller, under the MIT license. Its complete license is preserved in `assets/preact-v1.js` and below.
 
 The standard React source build uses the npm packages React and React DOM (Meta Platforms, Inc. and affiliates), under the MIT license. Their package distributions contain their respective licenses. esbuild and TypeScript are build-time dependencies with their own upstream licenses and are not loaded by the delivered app.
 

@@ -1,16 +1,17 @@
-# Hosting checks
+# Wavebook 3.0 verification
 
-- Existing app scripts and new hosting scripts pass Node syntax checks.
-- Manifest parses; icons exist; app scope and launch paths are relative.
-- Mocked service-worker tests pass: installation, app-specific cache cleanup,
-  offline fallback, online update, and unrelated-request passthrough.
-- Existing local-progress format and key are retained.
+`npm test` checks complete guides and routes for all 18 profiles; migration of
+version-2 backups; numeric validation; ER and Crit arithmetic; custom teams,
+repeats, sustain and mode compatibility; separate role stats; undo and round trips;
+all eight pages and all five character sections; practice presets and fight phases;
+search and filters; linked assets; and scoped offline-cache behavior.
 
-A live local browser test was blocked by the execution environment's browser
-policy (ERR_BLOCKED_BY_ADMINISTRATOR). No browser policy was changed.
+The responsive review page embeds the real app at 390 × 844 and 768 × 1024.
+Its preview changes use a separate save key and do not replace ordinary progress.
 
-This package has NOT been tested on a live GitHub Pages deployment or a physical
-iPhone. Verify the installed Home Screen web app once online, then offline, after
-publishing. Mock tests do not establish Safari compatibility or durable storage.
+DOM and cache tests do not reproduce every browser. A physical iPhone Home Screen
+installation and offline behavior still require testing on that device. Browser
+storage and caches can be evicted; exported backups retain and transfer progress.
 
-Game guide content was not re-researched for this hosting-only update.
+Research review: 2 October 2026. Stat references are contextual endgame targets,
+not a damage simulation or a guarantee that every team needs identical ER.

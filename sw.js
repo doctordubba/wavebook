@@ -2,18 +2,18 @@
    Only this app's own cache is managed. Personal progress is in localStorage,
    not this cache. Source sites and private backups are never cached here. */
 'use strict';
-const VERSION = 'a09257239c35';
+const VERSION = 'v3-20261002';
 const SCOPE = self.registration.scope;
 const PREFIX = 'wavebook-shell:' + SCOPE + ':';
 const CACHE = PREFIX + VERSION;
-const URLS = ['index.html','pwa.js','manifest.webmanifest','apple-touch-icon.png','icon-192.png','icon-512.png']
+const URLS = ['index.html','pwa.js','manifest.webmanifest','apple-touch-icon.png','icon-192.png','icon-512.png','assets/preact-v1.js','assets/data-v3.js','assets/app-v3.js','assets/styles-v3.css','assets/workspace-v3.css','assets/original-report.pdf']
   .map(name => new URL(name, SCOPE).href);
 const INDEX = URLS[0];
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
     await cache.addAll(URLS.map(url => new Request(url, {cache: 'reload'})));
-    // App code and report are inline; taking control cannot mix bundle versions.
+    // Versioned asset paths keep the HTML and application bundle consistent.
     await self.skipWaiting();
   })());
 });
@@ -54,6 +54,6 @@ self.addEventListener('fetch', event => {
   if (request.mode === 'navigate' && (bare === SCOPE || bare === INDEX)) {
     event.respondWith(networkOrCache(request, INDEX));
   } else if (URLS.includes(bare)) {
-    event.respondWith(networkOrCache(request, bare));
+    event.respondWith((async () => { const cache = await caches.open(CACHE); return await cache.match(bare) || networkOrCache(request, bare); })());
   }
 });
