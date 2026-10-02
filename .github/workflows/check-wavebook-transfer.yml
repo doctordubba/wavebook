@@ -1,0 +1,32 @@
+name: Check Wavebook transfer integrity
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/wavebook-package/**'
+      - '.github/workflows/check-wavebook-transfer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: check-wavebook-transfer
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check uploaded segment boundaries
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib
+          expected = ['ec4ddc40f3291f5df25992322e08a2143928fba6','ad7891dc5c3317c922f4176d755abb30d01c8605','45088ea24c6e29e0279877a2d2d4dd03752ff7b6','6b54bfde8ded35826d0b3bc139dd5301ebd82d00','ea734704559288f8d1befb76bfff1514ce785621','62dea372c6f67c7bd3bbe2b3cb3f9333ee825d31','38c144e479d581fa6a43edda4ff81376ec6582f2','af4cfd6367c8de25bb695b74e1b009d9eebabb54','0e3d3cd13694f52d3e4d7581387f768416ce9897','1c2f883980626702f8f4bda0204d52d7f07184e6','c739baeaa34b12f96f8aab10aab815744697fc5c','30b13342fb8bbc92ddabc3c524e01e423d7e5941','219d84f03e27352adb8fb9d85931c647ad15863a','ca86f58d9679cc7a34e2b50ddc12a363951c63f8','1cd8afe9fed552275b801f5c7a983ebd24799358','5be4a4e83b5720d2875098d549534972de9d6cd4']
+          for i, sha in enumerate(expected,1):
+              p=Path(f'.github/wavebook-package/part-{i:02}.b64')
+              if not p.exists():
+                  print(p.name, 'MISSING'); continue
+              raw=p.read_bytes(); compact=b''.join(raw.split())
+              n=18000 if i<16 else 4488
+              def gitsha(b):return hashlib.sha1(f'blob {len(b)}\0'.encode()+b).hexdigest()
+              print(p.name, 'bytes',len(raw),'exact',gitsha(raw)==sha,'prefix',gitsha(compact[:n]+b'\n')==sha,'suffix',gitsha(compact[-n:]+b'\n')==sha,'start',compact[:40].decode(),'end',compact[-40:].decode())
