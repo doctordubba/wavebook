@@ -1,0 +1,36 @@
+{
+  "format": "tar.xz",
+  "size": 205864,
+  "sha256": "b524ff1b9ad13dd438c6b850acdf7928bb95ee6e770124d0f211fc12738bb066",
+  "files": {
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "DEPLOYMENT.md": "9d21debfb15ed876d8944284867d728a9573e1456db8744bfc51015dd5037333",
+    "TESTING.md": "4e37b6f4c7affc8634971973f892b71f9c3bea2b100a23e83b172de6528e937a",
+    "THIRD_PARTY_NOTICES.txt": "8b04ed2a5e50f482a1a63734cf5dc834b0eefd876b31a9b7c7eccf0acc8d5abd",
+    "apple-touch-icon.png": "141985cb3588ddcd00522938422792021c08b0d15d49489efa13f2eb44b55c58",
+    "icon-192.png": "0f59cf0276c34d066382b5a226d4b97739fbad7a25f7f482647a4e11bc6a7662",
+    "icon-512.png": "6f87fa773becec9d246c491de5eb845201ce6ec51e731f00702c08f6e59d8b13",
+    "index.html": "ffd81fc069cf0dc6e5a2709997279732f15742a429617b4bd36a788dad05365d",
+    "manifest.webmanifest": "e4f95c6ad8781c1986c7e7e6d484ab7c0b6bc5e65162a91d55df7a4aecb441ea",
+    "pwa.js": "eea36907cfc0927248769046b5feab277ac4d05c35b1c1dc694512e1440730b5",
+    "sw.js": "addb8bad18b65f6ee0669d98c34ebe76f630242d5f10d96174de5be3f7d71261"
+  },
+  "parts": [
+    {"file":"part-01.b64","sha256":"cd6fca5112931f6d1372d8e2fa50526172508061996408d31cf408d15ff6a5c4"},
+    {"file":"part-02.b64","sha256":"54e7420b17ececbc4705cca6ec172fbcd7554722c7ad99cf42deb6b297d021a0"},
+    {"file":"part-03.b64","sha256":"aac855b9bebd91e10c9b3d0cd91f7238732ac14dc3f252362f37743bb2ad76ff"},
+    {"file":"part-04.b64","sha256":"a03fbe1488c933efd12004335910905bf571ecc7a0ba9e243df1ad3e7c9d2681"},
+    {"file":"part-05.b64","sha256":"fb40dbd8f17ebb6e4e3387e6946ef96e2aa33ce192c749e8d73b04f7d1cec68c"},
+    {"file":"part-06.b64","sha256":"5b42c3c847f3ccd7959f4fdc28d1536b5ae4daa665683258388f275cb261cfdf"},
+    {"file":"part-07.b64","sha256":"dab3cdea065fbd1cba88b0e0b7fbb7d60a36e35f614a6b45bcad8e600198e37a"},
+    {"file":"part-08.b64","sha256":"40a1504472e9284d2851ff7b703ecb9a5ffca676cf3c3f1d263a1fd70a62fca5"},
+    {"file":"part-09.b64","sha256":"753427c1fa5aaf4454cae52158533969d41c9ebef28c1347986a59116923ac06"},
+    {"file":"part-10.b64","sha256":"c57166ec520cc29c5e1046a679226efa7e540acfd4f085c84fcd1b501bee7bbf"},
+    {"file":"part-11.b64","sha256":"57cf7d7a9cb8143e24ba73d27405f298267dbddaa382e2038d2668c7bee47702"},
+    {"file":"part-12.b64","sha256":"2cdff17159cec5bc787de23d3e94d339461a7b14278c16f9304660b9e561eb5f"},
+    {"file":"part-13.b64","sha256":"61390815037702bf44b6eb80937331e43e965289ea7761817bb414e8ae19d581"},
+    {"file":"part-14.b64","sha256":"dbc3a6925355b4c7ca684d6aba1d187fd35b9b0ee66503887a097c09475b939a"},
+    {"file":"part-15.b64","sha256":"dee9b29bf04e0a61e1d29c3a013f844c6f90df93ed1627fa586280efa0d105bf"},
+    {"file":"part-16.b64","sha256":"beeae4be29427029b1e27dc383c8b19c72e5df647eb8e7ab335ca536272c2f9c"}
+  ]
+}
